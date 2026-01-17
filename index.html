@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th><input type="checkbox">全选</th>
+        <th>商品</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>小计</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>
+          <img src="imgs/liulian.png" width="50px" alt="">
+          <span>马来西亚液氮冷冻猫山王榴莲4-6粒 冷冻水果 净重10kg</span>
+          <small>满500打9折，满1000打8折</small>
+        </td>
+        <td>￥<span id="spanPrice">188.50</span></td>
+        <td><button id="btnMinus">-</button><span id="spanCount">1</span><button id="btnAdd">+</button></td>
+        <td>
+          ￥<span id="spanSub">188.50</span>
+          <span id="spanOld">原价188.50</span>
+        </td>
+        <td>
+          <a href="javascript:;">删除</a>
+          <a href="javascript:;">移入收藏夹</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    //在全局范围定义四个公用的变量
+    var price=188.5, count=1, subOld=price, subNew=price;
+    
+    function calc(){
+      //4. 计算小计
+      subOld = price * count;
+      //打桩输出数量，看看是否发生变化？
+      console.log(count);
+      if (subOld >= 1000) {
+        subNew = subOld * 0.8;
+      } else if (subOld >= 500) {
+        subNew = subOld * 0.9;
+      } else {
+        subNew = subOld;
+      }
+      //5. 将原价保留2位小数
+      subOld = subOld.toFixed(2);
+      //6. 将折后价保留2位小数
+      subNew = subNew.toFixed(2);
+      //打桩输出计算后的小计
+      console.log(subOld,subNew);
+    }
+    
+    //当(on)单击(click)btnAdd按钮时，自动执行一项功能(function)
+    btnAdd.onclick = function () {
+      //获取数量框中的数量、单价框中的单价保存在变量中
+      count = spanCount.innerHTML, 
+          price = spanPrice.innerHTML;
+      //定义两个变量分别保存原价和折后价，并设置默认值
+      subOld = price, subNew = price;
+
+      /*在这里补充练习代码*/
+      //1. 将count变量强制转换为整数类型
+      count = parseInt(count); //不可省略
+      //2. 再讲count变量值+1
+      count += 1;
+      
+      //从这里剪切走的代码
+      calc();
+      /******************/
+
+      //将数量保存回数量框中
+      spanCount.innerHTML = count;
+      //将原价和折后价保存回页面中小计框
+      spanSub.innerHTML = subNew;
+      spanOld.innerHTML = "原价:" + subOld;
+    }
+
+    //当(on)单击(click)btnMinus按钮时，自动执行一项功能(function)
+    btnMinus.onclick = function () {
+      //获取数量框中的数量保存在变量中; 获得单价框中的单价
+      count = spanCount.innerHTML, 
+          price = spanPrice.innerHTML;
+      //定义两个变量分别保存原价和折后价，并设置默认值
+      subOld = price, subNew = price;
+
+      /*在这里补充练习代码*/
+      //如果count>1时，才能执行count-=1
+      if (count > 1) {
+        count -= 1;
+        //从这里删除的代码
+        calc();
+      }
+      /******************/
+
+      //将数量保存回数量框中
+      spanCount.innerHTML = count;
+      //将原价和折后价保存回页面中小计框
+      spanSub.innerHTML = subNew;
+      spanOld.innerHTML = "原价:" + subOld;
+    }
+  </script>
+</body>
+
+</html>
